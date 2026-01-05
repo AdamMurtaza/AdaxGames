@@ -3,89 +3,156 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AdaxGames | GitHub Library</title>
+    <title>AdaxGames | Premium Library</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&display=swap');
+
         body {
             font-family: 'Segoe UI', sans-serif;
-            background-color: #0d1117; /* GitHub Dark Theme style */
+            background-color: #05070a;
             color: #c9d1d9;
             margin: 0;
+            overflow-x: hidden;
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
+            cursor: none; 
+        }
+
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* Artistic Floating Title */
+        .title-container {
+            margin-top: 50px;
+            text-align: center;
+            animation: float 3s ease-in-out infinite;
+            z-index: 10;
         }
 
         h1 {
-            margin-top: 40px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4rem;
+            font-weight: 900;
             color: #58a6ff;
-            font-size: 3.5rem;
-            letter-spacing: 2px;
+            text-transform: uppercase;
+            letter-spacing: 8px;
+            margin: 0;
+            text-shadow: 0 0 10px rgba(88, 166, 255, 0.5),
+                         0 0 20px rgba(88, 166, 255, 0.3),
+                         4px 4px 0px #0f3460;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Persistent Settings Button */
+        .settings-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: #161b22;
+            border: 2px solid #58a6ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: none;
+            z-index: 10000;
+            transition: transform 0.3s;
+            box-shadow: 0 0 15px rgba(88, 166, 255, 0.2);
+        }
+
+        .settings-btn:hover {
+            transform: rotate(90deg) scale(1.1);
+            background: #58a6ff;
+            color: #05070a;
+        }
+
+        /* Deep Blue Button Style (Back & Game Buttons) */
+        .btn-blue {
+            padding: 15px 30px;
+            background: linear-gradient(145deg, #0f3460, #16213e);
+            color: #58a6ff;
+            border: 2px solid #58a6ff;
+            border-radius: 8px;
+            font-weight: bold;
+            font-family: 'Orbitron', sans-serif;
+            cursor: none;
+            transition: all 0.2s ease;
+            box-shadow: 0 6px 0px #08203e, 0 8px 15px rgba(0,0,0,0.4);
+            position: relative;
+            z-index: 10;
+        }
+
+        .btn-blue:active {
+            box-shadow: 0 2px 0px #08203e;
+            transform: translateY(4px);
         }
 
         .button-container {
             display: flex;
-            gap: 15px;
+            gap: 20px;
             flex-wrap: wrap;
             justify-content: center;
-            padding: 30px;
+            padding: 50px;
+            z-index: 10;
         }
 
-        .game-button {
-            padding: 15px 25px;
-            background-color: #21262d;
-            color: #58a6ff;
-            border: 1px solid #30363d;
-            border-radius: 6px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.2s;
+        /* Back Button - Positioned above game */
+        .back-btn {
+            margin: 20px;
+            display: none; /* Shown via JS */
         }
 
-        .game-button:hover {
-            background-color: #30363d;
-            border-color: #8b949e;
-            transform: translateY(-3px);
-        }
-
-        /* Container for the Game */
         #game-container {
             width: 95%;
             max-width: 1200px;
-            height: 70vh;
-            margin: 20px 0;
-            display: none; /* Hidden until button clicked */
-            border: 2px solid #30363d;
-            border-radius: 10px;
-            overflow: hidden;
-            background: #000;
-        }
-
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        .back-btn {
-            margin-bottom: 20px;
-            background: #238636;
-            color: white;
+            height: 75vh;
+            margin-bottom: 40px;
             display: none;
+            border: 4px solid #58a6ff;
+            border-radius: 15px;
+            background: #000;
+            box-shadow: 0 0 30px rgba(88, 166, 255, 0.2);
+            overflow: hidden;
+            z-index: 5;
         }
+
+        iframe { width: 100%; height: 100%; border: none; }
     </style>
 </head>
 <body>
 
-    <h1>AdaxGames</h1>
+    <canvas id="particle-canvas"></canvas>
 
-    <div class="button-container" id="menu">
-        <button class="game-button" onclick="loadGame('https://adammurtaza.github.io/Mr-White-Game/')">Mr White Game</button>
-        <button class="game-button" onclick="loadGame('https://YOUR_USER.github.io/game-two/')">Cyber Runner</button>
-        <button class="game-button" onclick="loadGame('https://YOUR_USER.github.io/game-three/')">Mystery Quest</button>
+    <div class="settings-btn" onclick="alert('Settings menu coming soon!')">
+        ⚙️
     </div>
 
-    <button id="back-button" class="game-button back-btn" onclick="closeGame()">← Back to Library</button>
+    <div class="title-container" id="title-wrapper">
+        <h1>AdaxGames</h1>
+    </div>
+
+    <div class="button-container" id="menu">
+        <button class="btn-blue" onclick="loadGame('https://YOUR_USER.github.io/game1/')">SPACE WARRIOR</button>
+        <button class="btn-blue" onclick="loadGame('https://YOUR_USER.github.io/game2/')">NEON RUNNER</button>
+        <button class="btn-blue" onclick="loadGame('https://YOUR_USER.github.io/game3/')">VOID QUEST</button>
+    </div>
+
+    <button id="back-button" class="btn-blue back-btn" onclick="closeGame()">← BACK TO LIBRARY</button>
 
     <div id="game-container">
         <iframe id="game-frame" src=""></iframe>
@@ -96,21 +163,96 @@
         const frame = document.getElementById('game-frame');
         const menu = document.getElementById('menu');
         const backBtn = document.getElementById('back-button');
+        const title = document.getElementById('title-wrapper');
 
         function loadGame(url) {
-            frame.src = url;
-            container.style.display = "block";
-            backBtn.style.display = "block";
-            menu.style.display = "none"; // Hides buttons while playing
-            window.scrollTo(0, 0);
+            burstParticles();
+            setTimeout(() => {
+                frame.src = url;
+                container.style.display = "block";
+                backBtn.style.display = "block";
+                menu.style.display = "none";
+                title.style.display = "none"; // Hide title to focus on game
+            }, 200);
         }
 
         function closeGame() {
-            frame.src = ""; // Stops the game music/logic
+            frame.src = "";
             container.style.display = "none";
             backBtn.style.display = "none";
-            menu.style.display = "flex"; // Shows buttons again
+            menu.style.display = "flex";
+            title.style.display = "block";
         }
+
+        // --- PARTICLE ENGINE ---
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let mouse = { x: -100, y: -100 };
+        let particleSizeMultiplier = 1;
+
+        window.onresize = () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        };
+        window.onresize();
+
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
+
+        window.addEventListener('mousedown', () => {
+            particleSizeMultiplier = 4;
+            setTimeout(() => particleSizeMultiplier = 1, 150);
+        });
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = mouse.x;
+                this.y = mouse.y;
+                this.size = (Math.random() * 4 + 1) * particleSizeMultiplier;
+                this.speedX = Math.random() * 2 - 1;
+                this.speedY = Math.random() * 2 - 1;
+                this.color = '#58a6ff';
+                this.life = 1.0;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.life -= 0.02;
+                if (this.size > 0.1) this.size -= 0.05;
+            }
+            draw() {
+                ctx.globalAlpha = this.life;
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function burstParticles() {
+            for(let i = 0; i < 15; i++) particles.push(new Particle());
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.push(new Particle());
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+                if (particles[i].life <= 0) {
+                    particles.splice(i, 1);
+                    i--;
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+        animate();
     </script>
 </body>
 </html>
